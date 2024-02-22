@@ -1,0 +1,332 @@
+:root {
+  --card-height: 450px; /* Initial card height */
+}
+
+.inventory-box {
+  width: 900px;
+  /* height: 450px; */
+  /* height: calc(450px + 60px * (4 - 1)); */
+  border-radius: 30px;
+  background: #fff;
+  box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+.inventory-top-row {
+  display: flex;
+  justify-content: space-between;
+}
+.inventory-heading {
+  color: #ff671f;
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 600;
+}
+.inventory-viewall-btn {
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 30px;
+  background: #ff671f;
+  padding: 10px 30px;
+  height: 35px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.inventory-viewall-btn:hover {
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+.membership-cards {
+  width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 500px;
+}
+.member-green-card {
+  /* width: 250px; */
+  flex-basis: calc(33.33% - 50px);
+  margin-bottom: 20px;
+  border-radius: 30px;
+  background: #046a38;
+  box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.05);
+  padding: 20px 15px;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.menber-plan-head {
+  color: #fff;
+  text-align: center;
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 10px 0;
+}
+.add-menber-btn {
+  color: #046a38;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 30px;
+  background: #fff;
+  height: 35px;
+  padding: 10px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.add-menber-btn:hover {
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.view-school-btn {
+  color: #ff671f;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 30px;
+  border: 1px solid #ff671f;
+  background: #fff;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.view-school-btn:hover {
+  color: #ff671f;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+.inventory-btn {
+  border-radius: 30px;
+  background: #046a38;
+  color: white;
+  padding: 10px 40px;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  height: 35px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inventory-btn:hover {
+  color: white;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+.school-btn-group {
+  display: flex;
+}
+.white-inner-box {
+  border-radius: 19px;
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+.school-green-text {
+  color: #046a38;
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 5px 0;
+}
+.form-group {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+.school-data {
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 120%;
+}
+.col-form-label {
+  min-width: 131px;
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 120%;
+}
+.doc-view-btn {
+  border-radius: 30px;
+  background: #f1eeec;
+  color: #ff671f;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 108.3%;
+  min-width: 320px;
+  border: none;
+  outline: none;
+  height: 40px;
+  cursor: pointer;
+  padding: 0 10px;
+}
+.input-bg-group {
+  border-radius: 30px;
+  background: #f1eeec;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 108.3%;
+  min-width: 320px;
+  border: none;
+  outline: none;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  align-items: center;
+}
+.edit-btn {
+  cursor: pointer;
+  color: #ff671f;
+  margin-left: 8px;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+.form-group-1 {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+.col-form-label-1 {
+  min-width: 105px;
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 120%;
+}
+.form-control {
+  border-radius: 30px;
+  background: #f1eeec;
+  border: none;
+  outline: none;
+  height: 40px;
+  padding: 0 10px;
+  min-width: 760px;
+}
+.small-inputs {
+  display: flex;
+}
+
+.form-control-1 {
+  border-radius: 30px;
+  background: #f1eeec;
+  border: none;
+  outline: none;
+  height: 40px;
+  padding: 0 10px;
+  min-width: 150px;
+  margin-right: 20px;
+}
+.col-form-label-2 {
+  margin-right: 15px;
+}
+.add-org-btn {
+  display: flex;
+  justify-content: end;
+}
+.filter-btn {
+  border-radius: 20px;
+  background: #f1eeec;
+  min-width: 100px;
+  height: 35px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.date-filter {
+  border-radius: 20px;
+  background: #f1eeec;
+  min-width: 100px;
+  height: 35px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0 10px;
+}
+.search-update {
+  display: flex;
+}
+.search-input {
+  height: 35px;
+  background: #f1eeec;
+  min-width: 230px;
+  margin-right: 20px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  padding: 0 10px;
+}
+.search-school-btn {
+  border-radius: 20px;
+  background: #ff671f;
+  height: 35px;
+  color: #fff;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 30px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.school-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.school-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.school-table th,
+.school-table td {
+  padding: 10px;
+  text-align: center;
+}
+.school-table th {
+  background-color: #f2f2f2;
+  font-weight: 500;
+}
+
+.school-table div {
+  margin-bottom: 5px;
+}
+.negative {
+  color: red;
+}
+
+.positive {
+  color: green;
+}
+.update-table {
+  margin-top: 40px;
+}

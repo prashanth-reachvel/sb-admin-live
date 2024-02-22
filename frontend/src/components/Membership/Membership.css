@@ -1,0 +1,111 @@
+.membership-container {
+  display: flex;
+}
+
+.membership-inner-container {
+  width: 998px;
+  height: 769px;
+  box-shadow: 1px 1px 10px 5px #0000000d;
+  border-radius: 30px;
+  margin-left: 0px;
+  padding: 30px;
+}
+
+.membership-title {
+  color: #ff671f;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.label-input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.membership-label {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.membership-input {
+  width: 738px;
+  height: 40px;
+  background: #f1eeec;
+  border-radius: 30px;
+  padding-left: 20px;
+  border: none;
+  outline: none;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.short-input {
+  width: 300px;
+}
+
+.gender-input {
+  margin-left: 160px;
+}
+
+.nationality-input {
+  width: 250px;
+  margin-left: 130px;
+}
+
+.mobile-input {
+  margin-left: 160px;
+}
+
+.city-input {
+  margin-left: 190px;
+}
+
+.email-input {
+  margin-left: 180px;
+}
+
+.share-your-opinion {
+  width: 120px;
+  text-align: left;
+}
+
+.share-your-opinion-input {
+  height: 100px;
+}
+.membership-plans-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.membership-plans-inner-container {
+  display: flex;
+  align-items: center;
+}
+
+.membership-radio-input {
+  width: 20px;
+  height: 20px;
+  accent-color: #ff671f;
+}
+
+.plan {
+  margin-left: 10px;
+}
+
+.submit-btn {
+  width: 120px;
+  height: 35px;
+  background: #ff671f;
+  border-radius: 30px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+  border: none;
+  outline: none;
+  position: relative;
+  left: 430px;
+}

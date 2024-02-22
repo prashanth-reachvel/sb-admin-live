@@ -1,0 +1,64 @@
+.add-school-container {
+  display: flex;
+}
+
+.add-school-inner-container {
+  width: 900px;
+  height: 558px;
+  box-shadow: 1px 1px 10px 5px #0000000d;
+  border-radius: 30px;
+  margin-left: 0px;
+  padding: 30px;
+}
+
+.add-school-title {
+  color: #ff671f;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.label-input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.add-school-label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.add-school-input {
+  width: 720px;
+  height: 40px;
+  background: #f1eeec;
+  border-radius: 30px;
+  padding-left: 20px;
+  border: none;
+  outline: none;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.short-input {
+  width: 300px;
+}
+
+/* .email-input {
+  margin-left: 110px;
+} */
+
+.submit-btn {
+  width: 120px;
+  height: 35px;
+  background: #ff671f;
+  border-radius: 30px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+  border: none;
+  outline: none;
+  position: relative;
+}

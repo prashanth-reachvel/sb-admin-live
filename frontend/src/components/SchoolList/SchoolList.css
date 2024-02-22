@@ -1,0 +1,100 @@
+.schoollist-container {
+  box-shadow: 1px 1px 10px 5px #0000000d;
+  border-radius: 30px;
+}
+
+.schoollist-inner-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 800px;
+  padding-left: 15px;
+}
+
+.school-text {
+  color: #ff671f;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.search-input {
+  padding-left: 20px;
+  background: #f1eeec;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444444;
+  width: 289px;
+  height: 35px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+}
+
+.search-btn {
+  width: 120px;
+  height: 35px;
+  background: #ff671f;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  outline: none;
+  border: none;
+}
+
+.search-addschool-container {
+  width: 260px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.select-option {
+  width: 117px;
+  height: 35px;
+  background: #f1eeec;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.add-school {
+  width: 135px;
+  height: 35px;
+  border: 1px solid #ff671f;
+  border-radius: 30px;
+  color: #ff671f;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.go-button {
+  background: #ff671f;
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+}

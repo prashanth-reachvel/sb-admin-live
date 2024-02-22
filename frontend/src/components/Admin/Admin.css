@@ -1,0 +1,81 @@
+/* Admin.css */
+
+.admin-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.box-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.box {
+  width: 250px;
+  height: 150px;
+  box-shadow: 1px 1px 10px 0px #0000000d;
+  border-radius: 30px;
+}
+
+.flavoured-milk {
+  border: 1px solid #ff671f;
+  background: linear-gradient(0deg, #ffede4, #ffede4);
+}
+
+.uniform-distribution {
+  border: 1px solid #046a38;
+  background: linear-gradient(0deg, #d9f5e7, #d9f5e7);
+}
+
+.educational-kits {
+  border: 1px solid #444444;
+  background: linear-gradient(0deg, #f4f4f4, #f4f4f4);
+}
+
+.box-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.box-content {
+  padding: 0;
+  margin: 0;
+  line-height: 10px;
+}
+
+.school-list-container {
+  width: 988px;
+  height: 640px;
+  box-shadow: 1px 1px 10px 5px #0000000d;
+  border-radius: 20px;
+}
+
+.box-container-scroll {
+  width: 900px;
+  display: flex;
+  justify-content: space-between;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-bottom: 20px;
+}
+
+.scroll-container {
+  display: flex;
+  align-items: center;
+}
+
+.scroll-arrow {
+  cursor: pointer;
+  font-size: 24px;
+  margin: 0 10px;
+  background: #ff671f;
+  border-radius: 50%;
+  color: #f4f4f4;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
