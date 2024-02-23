@@ -17,7 +17,7 @@ const UpdateInventory = () => {
       try {
         const encodedTitle = encodeURIComponent(title);
         const response = await axios.get(
-          `http://localhost:3000/api/inventory/${school}/${encodedTitle}`
+          `http://localhost:3001/api/inventory/${school}/${encodedTitle}`
         );
         const { createdDate, totalAddQuantity } = response.data;
         setUpdatedDate(createdDate);
@@ -35,7 +35,7 @@ const UpdateInventory = () => {
     try {
       const newTotal = totalAddQuantity + newTotalQuantity;
       await axios.post(
-        `http://localhost:3000/api/updateinventory/${school}/${title}`,
+        `http://localhost:3001/api/updateinventory/${school}/${title}`,
         {
           school,
           title,
