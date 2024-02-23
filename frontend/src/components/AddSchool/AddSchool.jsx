@@ -33,7 +33,7 @@ const AddSchool = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localadminapi.sevabharath.com/api/add", {
+      const response = await axios.post("https://localadminapi.sevabharath.com/api/add", {
         schoolName,
         schoolId,
         address,
