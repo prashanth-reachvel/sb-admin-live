@@ -38,7 +38,7 @@ const AddNewInventory = () => {
 
     try {
       const response = await axios.post(
-        "http://localadminapi.sevabharath.com/api/addinventory",
+        "https://localadminapi.sevabharath.com/api/addinventory",
         {
           school: schoolName,
           title,
