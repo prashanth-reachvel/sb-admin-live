@@ -15,7 +15,7 @@ const AddNewInventory = () => {
 
   //   try {
   //     const response = await axios.post(
-  //       "http://localhost:3001/api/addinventory",
+  //       "http://localadminapi.sevabharath.com/api/addinventory",
   //       {
   //         school: schoolName,
   //         title,
@@ -38,7 +38,7 @@ const AddNewInventory = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/addinventory",
+        "http://localadminapi.sevabharath.com/api/addinventory",
         {
           school: schoolName,
           title,
