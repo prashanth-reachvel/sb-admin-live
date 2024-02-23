@@ -14,7 +14,7 @@ const Signin = ({ onLogin }) => {
     e.preventDefault();
     try {
       axios
-        .post("http://localadminapi.sevabharath.com/login", { username, password })
+        .post("https://localadminapi.sevabharath.com/login", { username, password })
         .then((result) => {
           // console.log(result);
           console.log("Response from server:", result.data);
