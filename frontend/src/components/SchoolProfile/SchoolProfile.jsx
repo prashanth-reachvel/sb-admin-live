@@ -13,7 +13,7 @@ const SchoolProfile = () => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(
-          `http://localadminapi.sevabharath.com/api/profile/${schoolName}`
+          `https://localadminapi.sevabharath.com/api/profile/${schoolName}`
         );
         setProfileData(response.data);
       } catch (error) {
@@ -36,7 +36,7 @@ const SchoolProfile = () => {
       const newUsername = e.target.innerText;
       try {
         await axios.put(
-          `http://localadminapi.sevabharath.com/api/profile/updateUsername/${schoolName}`,
+          `https://localadminapi.sevabharath.com/api/profile/updateUsername/${schoolName}`,
           {
             username: newUsername,
           }
@@ -55,7 +55,7 @@ const SchoolProfile = () => {
       const newPassword = e.target.innerText;
       try {
         await axios.put(
-          `http://localadminapi.sevabharath.com/api/profile/updatePassword/${schoolName}`,
+          `https://localadminapi.sevabharath.com/api/profile/updatePassword/${schoolName}`,
           {
             password: newPassword,
           }
