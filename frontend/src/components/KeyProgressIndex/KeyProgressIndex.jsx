@@ -11,7 +11,7 @@ const KeyProgressIndex = () => {
     const fetchInventoryData = async () => {
       try {
         const response = await axios.get(
-          `http://localadminapi.sevabharath.com/api/inventory/${schoolName}`
+          `https://localadminapi.sevabharath.com/api/inventory/${schoolName}`
         );
         console.log(response.data);
         setInventoryData(response.data);
