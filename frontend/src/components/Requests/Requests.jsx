@@ -12,7 +12,7 @@ const Requests = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/requests?limit=5"
+          "http://localadminapi.sevabharath.com/api/requests?limit=5"
         );
         console.log(response.data);
         setRequests(response.data);
@@ -34,7 +34,7 @@ const Requests = () => {
   const handleStatusChange = async (event, requestId) => {
     const newStatus = event.target.value;
     try {
-      await axios.put(`http://localhost:3001/api/requests/${requestId}`, {
+      await axios.put(`http://localadminapi.sevabharath.com/api/requests/${requestId}`, {
         status: newStatus,
       });
       // Update the status in the local state
