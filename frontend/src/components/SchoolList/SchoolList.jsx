@@ -9,7 +9,7 @@ const SchoolList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localadminapi.sevabharath.com/schoolslist")
+      .get("https://localadminapi.sevabharath.com/schoolslist")
       .then((response) => {
         setSchools(response.data);
       })
