@@ -13,7 +13,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localadminapi.sevabharath.com/register", { username, email, password })
+      .post("https://localadminapi.sevabharath.com/register", { username, email, password })
       .then((result) => {
         console.log(result);
         navigate("/"); // Redirects to Signin Page
