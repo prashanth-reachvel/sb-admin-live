@@ -15,7 +15,7 @@ const RecentUpdates = () => {
       try {
         const encodedTitle = encodeURIComponent(title);
         const response = await axios.get(
-          `http://localhost:3001/api/recentupdates/${school}/${encodedTitle}?limit=5`
+          `http://localadminapi.sevabharath.com/api/recentupdates/${school}/${encodedTitle}?limit=5`
         );
         setUpdates(response.data || []); // Ensure updates is always an array
       } catch (error) {
