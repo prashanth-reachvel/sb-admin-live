@@ -17,7 +17,7 @@ const UpdateInventory = () => {
       try {
         const encodedTitle = encodeURIComponent(title);
         const response = await axios.get(
-          `http://localadminapi.sevabharath.com/api/inventory/${school}/${encodedTitle}`
+          `https://localadminapi.sevabharath.com/api/inventory/${school}/${encodedTitle}`
         );
         const { createdDate, totalAddQuantity } = response.data;
         setUpdatedDate(createdDate);
@@ -35,7 +35,7 @@ const UpdateInventory = () => {
     try {
       const newTotal = totalAddQuantity + newTotalQuantity;
       await axios.post(
-        `http://localadminapi.sevabharath.com/api/updateinventory/${school}/${title}`,
+        `https://localadminapi.sevabharath.com/api/updateinventory/${school}/${title}`,
         {
           school,
           title,
