@@ -13,7 +13,7 @@ const Admin = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/inventories"
+          "http://localadminapi.sevabharath.com/api/inventories"
         );
         console.log(response.data);
 
