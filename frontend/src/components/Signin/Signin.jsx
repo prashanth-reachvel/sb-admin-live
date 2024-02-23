@@ -14,7 +14,7 @@ const Signin = ({ onLogin }) => {
     e.preventDefault();
     try {
       axios
-        .post("http://localhost:3000/login", { username, password })
+        .post("http://localhost:3001/login", { username, password })
         .then((result) => {
           // console.log(result);
           console.log("Response from server:", result.data);
