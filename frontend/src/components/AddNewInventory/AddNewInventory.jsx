@@ -44,7 +44,7 @@ const AddNewInventory = () => {
           title,
           createdDate,
           totalAddQuantity,
-          available: 0,
+          available: totalAddQuantity,
           distributed: 0,
           reason: SB,
         }
