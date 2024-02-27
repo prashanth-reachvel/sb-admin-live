@@ -9,6 +9,7 @@ const UpdateInventory = () => {
   const [updatedDate, setUpdatedDate] = useState("");
   const [totalAddQuantity, setTotalAddQuantity] = useState(0);
   const [newTotalQuantity, setNewTotalQuantity] = useState(0);
+  const [totalBoxes, setTotalBoxes] = useState(0);
   const school = schoolName;
   const SB = "Updated by SB";
 
@@ -22,6 +23,7 @@ const UpdateInventory = () => {
         const { createdDate, totalAddQuantity } = response.data;
         setUpdatedDate(createdDate);
         setTotalAddQuantity(parseInt(totalAddQuantity));
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching inventory data:", error);
       }
@@ -44,6 +46,7 @@ const UpdateInventory = () => {
           totalAddQuantity: newTotal,
           available: 0,
           distributed: 0,
+          totalBoxes,
           reason: SB,
         }
       );
@@ -109,6 +112,7 @@ const UpdateInventory = () => {
             <div className="form-group-1">
               <label htmlFor="total-quantity" className=" col-form-label-2">
                 Total Quantity :
+                <span className="small-label-text">(bottles)</span>
               </label>
               <input
                 type="number"
@@ -118,6 +122,22 @@ const UpdateInventory = () => {
                 placeholder={`Available Qty: ${totalAddQuantity}`}
                 onChange={(e) => setNewTotalQuantity(parseInt(e.target.value))}
                 required
+              />
+            </div>
+            <div className="form-group-1">
+              <label htmlFor="total-quantity" className=" col-form-label-2">
+                Total Boxes :
+                <span className="small-label-text">
+                  (each box contains 25 bottles)
+                </span>
+              </label>
+              <input
+                type="number"
+                id="quant-inventory-school total-quantity"
+                name="number"
+                class="form-control-1"
+                placeholder="Enter boxes"
+                onChange={(e) => setTotalBoxes(e.target.value)}
               />
             </div>
           </div>
