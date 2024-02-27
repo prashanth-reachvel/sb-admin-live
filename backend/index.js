@@ -6,6 +6,7 @@ const Request = require("./models/Request");
 const User = require("./models/User");
 const Inventory = require("./models/AddInventory");
 const InventoryUpdate = require("./models/UpdateInventory");
+const InventoryItem = require("./models/InventoryItem");
 
 const app = express();
 app.use(express.json());
@@ -120,6 +121,7 @@ app.post("/api/addinventory", async (req, res) => {
       totalAddQuantity,
       available,
       distributed,
+      totalBoxes,
       reason,
     } = req.body;
 
@@ -131,6 +133,7 @@ app.post("/api/addinventory", async (req, res) => {
       totalAddQuantity,
       available,
       distributed,
+      totalBoxes,
       reason,
     });
 
@@ -150,7 +153,22 @@ app.get("/api/inventory/:schoolName", async (req, res) => {
   try {
     const { schoolName } = req.params;
     const inventory = await Inventory.find({ school: schoolName });
-    res.json(inventory);
+
+    // Get unique titles from the inventory
+    const uniqueTitles = [...new Set(inventory.map((item) => item.title))];
+
+    // Get the latest data for each unique title
+    const latestInventoryData = uniqueTitles.map((title) => {
+      return inventory
+        .filter((item) => item.title === title)
+        .sort((a, b) => {
+          const dateA = new Date(a.updatedDate || a.createdDate);
+          const dateB = new Date(b.updatedDate || b.createdDate);
+          return dateB - dateA;
+        })[0];
+    });
+
+    res.json(latestInventoryData);
   } catch (error) {
     console.error("Error fetching inventory:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -164,7 +182,8 @@ app.get("/api/inventory/:school/:title", async (req, res) => {
     const inventory = await Inventory.findOne({
       school: school,
       title: title,
-    });
+    }).sort({ createdDate: -1 }); // Sort by createdDate in descending order
+    // .limit(1); // Limit to 1 result
     if (!inventory) {
       return res.status(404).json({ error: "Inventory not found" });
     }
@@ -185,6 +204,7 @@ app.post("/api/updateinventory/:school/:title", async (req, res) => {
       totalAddQuantity,
       available,
       distributed,
+      totalBoxes,
       reason,
     } = req.body;
 
@@ -196,6 +216,7 @@ app.post("/api/updateinventory/:school/:title", async (req, res) => {
       totalAddQuantity,
       available,
       distributed,
+      totalBoxes,
       reason,
     });
 
@@ -314,6 +335,32 @@ app.get("/api/schools", async (req, res) => {
   } catch (err) {
     console.error("Error fetching schools:", err);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// POST route to update next shipment date
+app.put("/api/nextshipment/:schoolName/:title", async (req, res) => {
+  const { schoolName, title } = req.params;
+  const { newShipmentDate } = req.body;
+
+  try {
+    const inventoryItem = await InventoryItem.findOneAndUpdate(
+      { school: schoolName, title: title },
+      { shipmentDate: newShipmentDate },
+      { new: true }
+    );
+
+    if (!inventoryItem) {
+      return res.status(404).json({ message: "Inventory item not found" });
+    }
+
+    res.json({
+      message: "Next shipment date updated successfully",
+      inventoryItem,
+    });
+  } catch (error) {
+    console.error("Error updating next shipment date:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
