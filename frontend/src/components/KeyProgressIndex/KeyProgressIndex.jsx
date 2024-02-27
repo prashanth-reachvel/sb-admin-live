@@ -16,7 +16,20 @@ const KeyProgressIndex = () => {
           `https://localadminapi.sevabharath.com/api/inventory/${schoolName}`
         );
         console.log(response.data);
-        setInventoryData(response.data);
+        const uniqueTitles = Array.from(
+          new Set(response.data.map((item) => item.title))
+        );
+        const uniqueInventoryData = uniqueTitles.map((title) => {
+          const latestItem = response.data
+            .filter((item) => item.title === title)
+            .sort((a, b) => {
+              const dateA = new Date(a.updatedDate || a.createdDate);
+              const dateB = new Date(b.updatedDate || b.createdDate);
+              return dateB - dateA;
+            })[0];
+          return latestItem;
+        });
+        setInventoryData(uniqueInventoryData);
       } catch (error) {
         console.error("Error fetching inventory data:", error);
       }
@@ -41,10 +54,13 @@ const KeyProgressIndex = () => {
             title: title,
           }
         );
-        setInventoryData((prevData) => ({
-          ...prevData,
-          shipmentDate: newShipmentDate,
-        }));
+        setInventoryData((prevData) =>
+          prevData.map((item) =>
+            item.title === title
+              ? { ...item, shipmentDate: newShipmentDate }
+              : item
+          )
+        );
         setEditShipmentDate(false);
         alert("Shipment Date updated successfully");
       } catch (error) {
@@ -53,39 +69,8 @@ const KeyProgressIndex = () => {
     }
   };
 
-  // const handleNextShipmentChange = async (title, schoolName) => {
-  //   try {
-  //     await axios.post(
-  //       `http://localhost:3001/api/nextshipment/${encodeURIComponent(
-  //         schoolName
-  //       )}/${encodeURIComponent(title)}`,
-  //       { nextShipmentDate: nextShipmentDate }
-  //     );
-  //     console.log("Next shipment date updated successfully");
-  //     // Optionally, you can update the local state or fetch the data again to reflect the change
-  //   } catch (error) {
-  //     console.error("Error updating next shipment date:", error);
-  //   }
-  // };
-
-  // Calculate the container height based on the number of rows
-  const containerHeight =
-    Math.ceil(inventoryData.length / 3) *
-      parseInt(
-        getComputedStyle(document.documentElement).getPropertyValue(
-          "--card-height"
-        ),
-        10
-      ) +
-    20;
-
   return (
-    <div
-      className="inventory-box"
-      style={{
-        height: inventoryData.length === 0 ? "200px" : `${containerHeight}px`,
-      }}
-    >
+    <div className="inventory-box">
       <div className="inventory-top-row">
         <div className="inventory-heading-date-container">
           <h3 className="inventory-heading">{schoolName}</h3>
@@ -106,66 +91,44 @@ const KeyProgressIndex = () => {
             No KPIs found...
           </p>
         ) : (
-          inventoryData
-            .reduce((acc, item, index) => {
-              const existingIndex = acc.findIndex(
-                (card) => card.title === item.title
-              );
-              if (existingIndex !== -1) {
-                // Check if the new item has a more recent updatedDate
-                if (
-                  new Date(item.updatedDate) >
-                  new Date(acc[existingIndex].updatedDate)
-                ) {
-                  acc[existingIndex] = {
-                    ...acc[existingIndex],
-                    distributed: item.distributed,
-                    available: item.available,
-                    totalAddQuantity: item.totalAddQuantity,
-                    updatedDate: item.updatedDate, // Update the updatedDate
-                  };
-                }
-              } else {
-                acc.push(item);
-              }
-              return acc;
-            }, [])
-            .map((item, index) => (
-              <div className="member-green-card" key={index}>
-                <p className="last-updated">Last Updated: {item.updatedDate}</p>
-                <p className="menber-plan-head">{item.title}</p>
-                <div className="white-inner-box">
-                  <p className="school-green-text">
-                    Distributed : {item.distributed}
-                  </p>
-                  <p className="school-green-text">
-                    Available : {item.available}
-                  </p>
-                  <p className="school-green-text">
-                    Total Shipped : {item.totalAddQuantity}
-                  </p>
-                </div>
-                <Link to={`/update-inventory/${schoolName}/${item.title}`}>
-                  <button className="add-menber-btn">edit</button>
-                </Link>
-                <div className="next-shipment-container">
-                  <label htmlFor="next-shipment">Next Shipment: </label>
-                  <input
-                    type="date"
-                    className="next-shipment-date"
-                    contentEditable={editShipmentDate}
-                    onKeyPress={(e) => handleShipmentDateChange(e, item.title)}
-                    onBlur={() => setEditShipmentDate}
-                    value={item.shipmentDate}
-                  />
-                  {!editShipmentDate && (
-                    <button className="edit-btn" onClick={handleShipmentEdit}>
-                      Edit
-                    </button>
-                  )}
-                </div>
+          inventoryData.map((item, index) => (
+            <div className="member-green-card" key={index}>
+              <p className="last-updated">
+                Last Updated: {item.updatedDate || item.createdDate}
+              </p>
+              <p className="menber-plan-head">{item.title}</p>
+              <div className="white-inner-box">
+                <p className="school-green-text">
+                  Distributed : {item.distributed}
+                </p>
+                <p className="school-green-text">
+                  Available : {item.available}
+                </p>
+                <p className="school-green-text">
+                  Total Shipped : {item.totalAddQuantity}
+                </p>
               </div>
-            ))
+              <Link to={`/update-inventory/${schoolName}/${item.title}`}>
+                <button className="add-menber-btn">edit</button>
+              </Link>
+              <div className="next-shipment-container">
+                <label htmlFor="next-shipment">Next Shipment: </label>
+                <input
+                  type="date"
+                  className="next-shipment-date"
+                  contentEditable={editShipmentDate}
+                  onKeyPress={(e) => handleShipmentDateChange(e, item.title)}
+                  onBlur={() => setEditShipmentDate(false)}
+                  value={item.shipmentDate}
+                />
+                {!editShipmentDate && (
+                  <button className="edit-btn" onClick={handleShipmentEdit}>
+                    Edit
+                  </button>
+                )}
+              </div>
+            </div>
+          ))
         )}
       </div>
     </div>
