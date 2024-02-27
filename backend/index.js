@@ -10,7 +10,10 @@ const InventoryItem = require("./models/InventoryItem");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "https://localadmin.sevabharath.com",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+}));
 app.use("/uploads", express.static("uploads"));
 
 require("dotenv").config();
