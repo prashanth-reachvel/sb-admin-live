@@ -18,6 +18,8 @@ const SchoolList = () => {
       });
   }, []);
 
+  console.log(schools.length);
+
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -29,7 +31,7 @@ const SchoolList = () => {
   return (
     <div className="schoollist-container">
       <div className="schoollist-inner-container">
-        <p className="school-text">Schools</p>
+        <p className="school-text">Schools - {schools.length}</p>
         <div className="search-addschool-container">
           <input
             type="search"
@@ -51,6 +53,7 @@ const SchoolList = () => {
               <th>School Name</th>
               <th>Location</th>
               <th>Contact Details</th>
+              <th>Students Count</th>
               <th></th>
             </tr>
           </thead>
@@ -64,6 +67,7 @@ const SchoolList = () => {
                   {school.email} <br />
                   {school.mobile}
                 </td>
+                <td>{school.students}</td>
                 <td>
                   <Link to={`/key-progress-index/${school.schoolName}`}>
                     <button className="go-button">Go</button>
