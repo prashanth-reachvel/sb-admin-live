@@ -8,6 +8,7 @@ const AddNewInventory = () => {
   const [title, setTitle] = useState("");
   const [createdDate, setCreatedDate] = useState("");
   const [totalAddQuantity, setTotalAddQuantity] = useState(0);
+  const [totalBoxes, setTotalBoxes] = useState(0);
   const SB = "Updated by SB";
 
   // const handleAddInventory = async (e) => {
@@ -41,15 +42,17 @@ const AddNewInventory = () => {
         "https://localadminapi.sevabharath.com/api/addinventory",
         {
           school: schoolName,
-          title,
+          title: title.trim(),
           createdDate,
           totalAddQuantity,
           available: totalAddQuantity,
           distributed: 0,
+          totalBoxes,
           reason: SB,
         }
       );
       console.log(response.data);
+      window.location.reload();
     } catch (error) {
       console.error("Error Adding Inventory");
     }
@@ -87,12 +90,29 @@ const AddNewInventory = () => {
               />
             </div>
             <div className="tot-quantity">
-              <label>Total Quantity:</label>
+              <label className="label-container">
+                Total Quantity:
+                <span className="small-label-text">(bottles)</span>
+              </label>
               <input
                 type="number"
                 className="quantity-input"
                 placeholder="Enter quantity"
                 onChange={(e) => setTotalAddQuantity(e.target.value)}
+              />
+            </div>
+            <div className="tot-quantity">
+              <label className="label-container">
+                Total Boxes:
+                <span className="small-label-text">
+                  (each box contains 25 bottles)
+                </span>
+              </label>
+              <input
+                type="number"
+                className="quantity-input"
+                placeholder="Enter quantity"
+                onChange={(e) => setTotalBoxes(e.target.value)}
               />
             </div>
           </div>
