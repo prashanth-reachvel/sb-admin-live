@@ -12,6 +12,7 @@ const AddSchool = () => {
   const [mobile, setMobile] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [students, setStudents] = useState(0);
 
   useEffect(() => {
     setSchoolId(generateSchoolId());
@@ -42,6 +43,7 @@ const AddSchool = () => {
         mobile,
         username,
         password,
+        students,
       });
       console.log(response.data);
     } catch (error) {
@@ -124,10 +126,20 @@ const AddSchool = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <div className="label-input-container">
+            <div style={{ display: "flex" }}>
+              <label className="add-school-label">Students Count: </label>
+              <input
+                type="number"
+                className="add-school-input short-input students-count-input"
+                onChange={(e) => setStudents(e.target.value)}
+              />
+            </div>
+          </div>
           <button
             type="submit"
             className="submit-btn"
-            style={{ left: "385px" }}
+            style={{ left: "385px", top: "-60px" }}
           >
             SUBMIT
           </button>
