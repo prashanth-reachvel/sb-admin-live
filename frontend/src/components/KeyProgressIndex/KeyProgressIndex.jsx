@@ -6,6 +6,8 @@ import axios from "axios";
 const KeyProgressIndex = () => {
   const { schoolName } = useParams();
   const [inventoryData, setInventoryData] = useState([]);
+  const [editShipmentDate, setEditShipmentDate] = useState("");
+  const currentDate = new Date().toLocaleDateString();
 
   useEffect(() => {
     const fetchInventoryData = async () => {
@@ -21,6 +23,50 @@ const KeyProgressIndex = () => {
     };
     fetchInventoryData();
   }, [schoolName]);
+
+  const handleShipmentEdit = () => {
+    setEditShipmentDate(true);
+  };
+
+  const handleShipmentDateChange = async (e, title) => {
+    if (e.key === "Enter") {
+      const newShipmentDate = e.target.value;
+      try {
+        await axios.put(
+          `https://localadminapi.sevabharath.com/api/nextshipment/${encodeURIComponent(
+            schoolName
+          )}/${encodeURIComponent(title)}`,
+          {
+            newShipmentDate: newShipmentDate,
+            title: title,
+          }
+        );
+        setInventoryData((prevData) => ({
+          ...prevData,
+          shipmentDate: newShipmentDate,
+        }));
+        setEditShipmentDate(false);
+        alert("Shipment Date updated successfully");
+      } catch (error) {
+        console.error("Error updating Shipment Date:", error);
+      }
+    }
+  };
+
+  // const handleNextShipmentChange = async (title, schoolName) => {
+  //   try {
+  //     await axios.post(
+  //       `http://localhost:3001/api/nextshipment/${encodeURIComponent(
+  //         schoolName
+  //       )}/${encodeURIComponent(title)}`,
+  //       { nextShipmentDate: nextShipmentDate }
+  //     );
+  //     console.log("Next shipment date updated successfully");
+  //     // Optionally, you can update the local state or fetch the data again to reflect the change
+  //   } catch (error) {
+  //     console.error("Error updating next shipment date:", error);
+  //   }
+  // };
 
   // Calculate the container height based on the number of rows
   const containerHeight =
@@ -41,7 +87,10 @@ const KeyProgressIndex = () => {
       }}
     >
       <div className="inventory-top-row">
-        <h3 className="inventory-heading">{schoolName}</h3>
+        <div className="inventory-heading-date-container">
+          <h3 className="inventory-heading">{schoolName}</h3>
+          <p className="current-date">{currentDate}</p>
+        </div>
         <div className="school-btn-group">
           <Link to={`/school-profile/${schoolName}`}>
             <button className="view-school-btn">view school details</button>
@@ -63,12 +112,19 @@ const KeyProgressIndex = () => {
                 (card) => card.title === item.title
               );
               if (existingIndex !== -1) {
-                acc[existingIndex] = {
-                  ...acc[existingIndex],
-                  distributed: item.distributed,
-                  available: item.available,
-                  totalAddQuantity: item.totalAddQuantity,
-                };
+                // Check if the new item has a more recent updatedDate
+                if (
+                  new Date(item.updatedDate) >
+                  new Date(acc[existingIndex].updatedDate)
+                ) {
+                  acc[existingIndex] = {
+                    ...acc[existingIndex],
+                    distributed: item.distributed,
+                    available: item.available,
+                    totalAddQuantity: item.totalAddQuantity,
+                    updatedDate: item.updatedDate, // Update the updatedDate
+                  };
+                }
               } else {
                 acc.push(item);
               }
@@ -76,6 +132,7 @@ const KeyProgressIndex = () => {
             }, [])
             .map((item, index) => (
               <div className="member-green-card" key={index}>
+                <p className="last-updated">Last Updated: {item.updatedDate}</p>
                 <p className="menber-plan-head">{item.title}</p>
                 <div className="white-inner-box">
                   <p className="school-green-text">
@@ -85,12 +142,28 @@ const KeyProgressIndex = () => {
                     Available : {item.available}
                   </p>
                   <p className="school-green-text">
-                    Total : {item.totalAddQuantity}
+                    Total Shipped : {item.totalAddQuantity}
                   </p>
                 </div>
                 <Link to={`/update-inventory/${schoolName}/${item.title}`}>
                   <button className="add-menber-btn">edit</button>
                 </Link>
+                <div className="next-shipment-container">
+                  <label htmlFor="next-shipment">Next Shipment: </label>
+                  <input
+                    type="date"
+                    className="next-shipment-date"
+                    contentEditable={editShipmentDate}
+                    onKeyPress={(e) => handleShipmentDateChange(e, item.title)}
+                    onBlur={() => setEditShipmentDate}
+                    value={item.shipmentDate}
+                  />
+                  {!editShipmentDate && (
+                    <button className="edit-btn" onClick={handleShipmentEdit}>
+                      Edit
+                    </button>
+                  )}
+                </div>
               </div>
             ))
         )}
