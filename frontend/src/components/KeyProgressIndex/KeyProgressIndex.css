@@ -48,6 +48,7 @@
 .member-green-card {
   /* width: 250px; */
   flex-basis: calc(33.33% - 50px);
+  height: 280px;
   margin-bottom: 20px;
   border-radius: 30px;
   background: #046a38;
@@ -329,4 +330,37 @@
 }
 .update-table {
   margin-top: 40px;
+}
+
+.last-updated {
+  line-height: 0;
+}
+
+.next-shipment-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.next-shipment-date {
+  border: none;
+  outline: none;
+  background: none;
+  color: #f1eeec;
+}
+
+.inventory-heading-date-container {
+  display: flex;
+  flex-direction: column;
+  line-height: 0;
+}
+
+.current-date {
+  color: #ff671f;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  padding-bottom: 10px;
 }
