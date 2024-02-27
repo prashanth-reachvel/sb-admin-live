@@ -91,6 +91,13 @@ const SchoolProfile = () => {
         </div>
 
         <div className="form-group row">
+          <label htmlFor="schoolId" className=" col-form-label">
+            Students Count:
+          </label>
+          <div className=" school-data">{profileData.students}</div>
+        </div>
+
+        <div className="form-group row">
           <label htmlFor="address" className=" col-form-label">
             Address:
           </label>
