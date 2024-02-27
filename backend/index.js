@@ -15,7 +15,7 @@ app.use("/uploads", express.static("uploads"));
 
 require("dotenv").config();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const mongo_uri = process.env.MONGODB_URI;
 
 // Connect to MongoDB Atlas
