@@ -6,8 +6,13 @@ import axios from "axios";
 const KeyProgressIndex = () => {
   const { schoolName } = useParams();
   const [inventoryData, setInventoryData] = useState([]);
-  const [editShipmentDate, setEditShipmentDate] = useState("");
+  const [editShipmentDate, setEditShipmentDate] = useState(false);
   const currentDate = new Date().toLocaleDateString();
+
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   useEffect(() => {
     const fetchInventoryData = async () => {
@@ -94,7 +99,7 @@ const KeyProgressIndex = () => {
           inventoryData.map((item, index) => (
             <div className="member-green-card" key={index}>
               <p className="last-updated">
-                Last Updated: {item.updatedDate || item.createdDate}
+                Last Updated: {formatDate(item.updatedDate || item.createdDate)}
               </p>
               <p className="menber-plan-head">{item.title}</p>
               <div className="white-inner-box">
@@ -112,7 +117,9 @@ const KeyProgressIndex = () => {
                 <button className="add-menber-btn">edit</button>
               </Link>
               <div className="next-shipment-container">
-                <label htmlFor="next-shipment">Next Shipment: </label>
+                <label htmlFor="next-shipment" style={{ fontSize: "12px" }}>
+                  Next Shipment:{" "}
+                </label>
                 <input
                   type="date"
                   className="next-shipment-date"
@@ -122,7 +129,11 @@ const KeyProgressIndex = () => {
                   value={item.shipmentDate}
                 />
                 {!editShipmentDate && (
-                  <button className="edit-btn" onClick={handleShipmentEdit}>
+                  <button
+                    className="edit-btn"
+                    style={{ fontSize: "12px" }}
+                    onClick={handleShipmentEdit}
+                  >
                     Edit
                   </button>
                 )}
