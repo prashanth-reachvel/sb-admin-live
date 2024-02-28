@@ -341,6 +341,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-top: 10px;
 }
 
 .next-shipment-date {
@@ -348,6 +349,7 @@
   outline: none;
   background: none;
   color: #f1eeec;
+  font-size: 12px;
 }
 
 .inventory-heading-date-container {
