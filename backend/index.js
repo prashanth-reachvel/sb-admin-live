@@ -310,13 +310,36 @@ app.put("/api/profile/updatePassword/:schoolName", async (req, res) => {
   }
 });
 
-// Endpoint to fetch all inventories
+// Endpoint to fetch the latest record for each school based on title
 app.get("/api/inventories", async (req, res) => {
   try {
-    const inventories = await Inventory.find();
-    res.json(inventories);
+    const latestInventories = await Inventory.aggregate([
+      {
+        $addFields: {
+          latestDate: { $max: ["$createdDate", "$updatedDate"] }, // Calculate the maximum date between createdDate and updatedDate
+        },
+      },
+      {
+        $sort: {
+          school: 1,
+          title: 1,
+          latestDate: -1, // Sort by the latestDate in descending order
+        },
+      },
+      {
+        $group: {
+          _id: "$school",
+          latestItem: { $first: "$$ROOT" }, // Get the latest item for each school
+        },
+      },
+      {
+        $replaceRoot: { newRoot: "$latestItem" }, // Replace the root with the latestItem
+      },
+    ]);
+    console.log(latestInventories);
+    res.json(latestInventories);
   } catch (error) {
-    console.error("Error fetching inventories:", error);
+    console.error("Error fetching latest inventories:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
