@@ -162,15 +162,16 @@ app.get("/api/inventory/:schoolName", async (req, res) => {
 
     // Get the latest data for each unique title
     const latestInventoryData = uniqueTitles.map((title) => {
-      return inventory
-        .filter((item) => item.title === title)
-        .sort((a, b) => {
-          const dateA = new Date(a.updatedDate || a.createdDate);
-          const dateB = new Date(b.updatedDate || b.createdDate);
-          return dateB - dateA;
-        })[0];
+      const itemsWithTitle = inventory.filter((item) => item.title === title);
+      const latestItem = itemsWithTitle.reduce((prev, current) => {
+        const dateA = new Date(prev.updatedDate || prev.createdDate);
+        const dateB = new Date(current.updatedDate || current.createdDate);
+        return dateA > dateB ? prev : current;
+      });
+      return latestItem;
     });
 
+    console.log(latestInventoryData);
     res.json(latestInventoryData);
   } catch (error) {
     console.error("Error fetching inventory:", error);
