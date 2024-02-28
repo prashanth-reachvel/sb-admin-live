@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-// import Sidebar from "./Sidebar";
 import SchoolList from "../SchoolList/SchoolList";
 import "./Admin.css";
 import axios from "axios";
 
 const Admin = () => {
   const [inventoryData, setInventoryData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const scrollRef = useRef(null);
   const [startIndex, setStartIndex] = useState(0);
 
@@ -13,16 +13,24 @@ const Admin = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://localadminapi.sevabharath.com/api/inventories"
-        );
+          "https://schoolapi.sevabharath.com/api/inventories"
+        ); // Use relative URL to access backend endpoint
         console.log(response.data);
 
         // Process the inventory data to calculate cumulative values
+        if (!Array.isArray(response.data)) {
+          console.error("Response data is not an array:", response.data);
+          setLoading(false);
+          return;
+        }
+
         const processedData = processInventoryData(response.data);
 
         setInventoryData(processedData);
+        setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
         console.error("Error fetching the Data:", error);
+        setLoading(false); // Set loading to false in case of an error
       }
     };
     fetchData();
@@ -35,17 +43,16 @@ const Admin = () => {
     // Process the data and calculate cumulative values
     data.forEach((item) => {
       const { title, distributed, available, totalAddQuantity } = item;
-      if (titleMap[title]) {
-        titleMap[title].distributed += distributed;
-        titleMap[title].available += available;
-        titleMap[title].totalAddQuantity += totalAddQuantity;
-      } else {
+      if (!titleMap[title]) {
         titleMap[title] = {
-          distributed,
-          available,
-          totalAddQuantity,
+          distributed: 0,
+          available: 0,
+          totalAddQuantity: 0,
         };
       }
+      titleMap[title].distributed += distributed;
+      titleMap[title].available += available;
+      titleMap[title].totalAddQuantity += totalAddQuantity;
     });
 
     // Convert the object back to an array
@@ -81,29 +88,32 @@ const Admin = () => {
 
   return (
     <div className="admin-container">
-      {/* <Sidebar /> */}
       <div>
         <div className="scroll-container">
           <div className="scroll-arrow left-arrow" onClick={scrollLeft}>
             {"<"}
           </div>
           <div className="box-container-scroll" ref={scrollRef}>
-            {inventoryData.slice(startIndex, startIndex + 3).map((item) => (
-              <div key={item.title} className={`box ${item.className}`}>
-                <p className="box-title">{item.title}</p>
-                <div className="box-content">
-                  <p>
-                    Distributed: <span>{item.distributed}</span>
-                  </p>
-                  <p>
-                    Available: <span>{item.available}</span>
-                  </p>
-                  <p>
-                    Total: <span>{item.totalAddQuantity}</span>
-                  </p>
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              inventoryData.slice(startIndex, startIndex + 3).map((item) => (
+                <div key={item.title} className={`box ${item.className}`}>
+                  <p className="box-title">{item.title}</p>
+                  <div className="box-content">
+                    <p>
+                      Distributed: <span>{item.distributed}</span>
+                    </p>
+                    <p>
+                      Available: <span>{item.available}</span>
+                    </p>
+                    <p>
+                      Total: <span>{item.totalAddQuantity}</span>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
           <div className="scroll-arrow right-arrow" onClick={scrollRight}>
             {">"}
