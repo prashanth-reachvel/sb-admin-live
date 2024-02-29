@@ -21,7 +21,7 @@ const UpdateInventory = () => {
       try {
         const encodedTitle = encodeURIComponent(title);
         const response = await axios.get(
-          `http://localhost:3001/api/inventory/${school}/${encodedTitle}`
+          `https://localadminapi.sevabharath.com/api/inventory/${school}/${encodedTitle}`
         );
         const {
           createdDate,
@@ -55,7 +55,7 @@ const UpdateInventory = () => {
       const currentDate = new Date().toISOString().split("T")[0];
 
       await axios.post(
-        `http://localhost:3001/api/updateinventory/${school}/${title}`,
+        `https://localadminapi.sevabharath.com/api/updateinventory/${school}/${title}`,
         {
           school,
           title,
@@ -72,7 +72,7 @@ const UpdateInventory = () => {
       console.log("Data Updated Successfully");
 
       // Update the inventory in addinventory API
-      await axios.post("http://localhost:3001/api/addinventory", {
+      await axios.post("https://localadminapi.sevabharath.com/api/addinventory", {
         school,
         title,
         updatedDate: currentDate,
