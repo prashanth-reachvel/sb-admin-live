@@ -6,10 +6,11 @@ import axios from "axios";
 
 const UpdateInventory = () => {
   const { schoolName, title } = useParams();
-  const [updatedDate, setUpdatedDate] = useState("");
+  const [createdDate, setCreatedDate] = useState("");
   const [totalAddQuantity, setTotalAddQuantity] = useState(0);
   const [newTotalQuantity, setNewTotalQuantity] = useState(0);
   const [totalBoxes, setTotalBoxes] = useState(0);
+  const [available, setAvailable] = useState(0);
   const [newDistributed, setNewDistributed] = useState(0);
   const [newTotalBoxes, setNewTotalBoxes] = useState(0);
   const school = schoolName;
@@ -20,15 +21,21 @@ const UpdateInventory = () => {
       try {
         const encodedTitle = encodeURIComponent(title);
         const response = await axios.get(
-          `https://localadminapi.sevabharath.com/api/inventory/${school}/${encodedTitle}`
+          `http://localhost:3001/api/inventory/${school}/${encodedTitle}`
         );
-        const { createdDate, totalAddQuantity, totalBoxes, distributed } =
-          response.data;
-        setUpdatedDate(createdDate);
-        console.log(totalAddQuantity);
+        const {
+          createdDate,
+          totalAddQuantity,
+          totalBoxes,
+          available,
+          distributed,
+        } = response.data;
+        console.log(response.data);
         setTotalAddQuantity(parseInt(totalAddQuantity));
         setNewDistributed(parseInt(distributed));
+        setAvailable(parseInt(available));
         setTotalBoxes(parseInt(totalBoxes));
+        setCreatedDate(createdDate); // Set the createdDate from the response
       } catch (error) {
         console.error("Error fetching inventory data:", error);
       }
@@ -41,17 +48,22 @@ const UpdateInventory = () => {
 
     try {
       const newTotal = totalAddQuantity + newTotalQuantity; // Calculate the new total
+      const newAvailable = available + newTotalQuantity;
       const newBoxes = totalBoxes + newTotalBoxes;
-      console.log(newTotal);
+
+      // Get the current date and format it as YYYY-MM-DD
+      const currentDate = new Date().toISOString().split("T")[0];
+
       await axios.post(
-        `https://localadminapi.sevabharath.com/api/updateinventory/${school}/${title}`,
+        `http://localhost:3001/api/updateinventory/${school}/${title}`,
         {
           school,
           title,
-          updatedDate,
+          updatedDate: currentDate, // Use the current date as updatedDate
+          createdDate, // Use the createdDate from the state
           newTotalQuantity,
           totalAddQuantity: newTotal, // Use the new total here
-          available: newTotal,
+          available: newAvailable,
           distributed: newDistributed,
           totalBoxes: newBoxes,
           reason: SB,
@@ -60,21 +72,23 @@ const UpdateInventory = () => {
       console.log("Data Updated Successfully");
 
       // Update the inventory in addinventory API
-      await axios.post("https://localadminapi.sevabharath.com/api/addinventory", {
+      await axios.post("http://localhost:3001/api/addinventory", {
         school,
         title,
-        createdDate: updatedDate, // Use the updated date here
+        updatedDate: currentDate,
+        createdDate: createdDate, // Use the createdDate from the state
         totalAddQuantity: newTotal, // Use the new total here
-        available: newTotal,
+        available: newAvailable,
         distributed: newDistributed,
         totalBoxes: newBoxes,
         reason: SB,
       });
       console.log("Data Updated in addinventory API");
 
-      setUpdatedDate("");
       setTotalAddQuantity(newTotal); // Update totalAddQuantity with the new total
       setTotalBoxes(newBoxes);
+      setNewTotalQuantity(0); // Reset newTotalQuantity
+      setNewTotalBoxes(0); // Reset newTotalBoxes
       window.location.reload(); // Reload the page
     } catch (error) {
       console.error("Error updating inventory data:", error);
@@ -127,7 +141,7 @@ const UpdateInventory = () => {
                 name="name"
                 class="form-control-1"
                 placeholder="Please enter date"
-                onChange={(e) => setUpdatedDate(e.target.value)}
+                onChange={(e) => setCreatedDate(e.target.value)}
                 required
               />
             </div>
@@ -158,7 +172,7 @@ const UpdateInventory = () => {
                 id="quant-inventory-school total-quantity"
                 name="number"
                 class="form-control-1"
-                placeholder="Enter boxes"
+                placeholder={`${totalBoxes}`}
                 onChange={(e) => setNewTotalBoxes(e.target.value)}
               />
             </div>
