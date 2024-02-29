@@ -10,6 +10,7 @@ const UpdateInventory = () => {
   const [totalAddQuantity, setTotalAddQuantity] = useState(0);
   const [newTotalQuantity, setNewTotalQuantity] = useState(0);
   const [totalBoxes, setTotalBoxes] = useState(0);
+  const [newTotalBoxes, setNewTotalBoxes] = useState(0);
   const school = schoolName;
   const SB = "Updated by SB";
 
@@ -20,10 +21,11 @@ const UpdateInventory = () => {
         const response = await axios.get(
           `https://localadminapi.sevabharath.com/api/inventory/${school}/${encodedTitle}`
         );
-        const { createdDate, totalAddQuantity } = response.data;
+        const { createdDate, totalAddQuantity, totalBoxes } = response.data;
         setUpdatedDate(createdDate);
+        console.log(totalAddQuantity);
         setTotalAddQuantity(parseInt(totalAddQuantity));
-        console.log(response.data);
+        setTotalBoxes(parseInt(totalBoxes));
       } catch (error) {
         console.error("Error fetching inventory data:", error);
       }
@@ -35,7 +37,9 @@ const UpdateInventory = () => {
     e.preventDefault();
 
     try {
-      const newTotal = totalAddQuantity + newTotalQuantity;
+      const newTotal = totalAddQuantity + newTotalQuantity; // Calculate the new total
+      const newBoxes = totalBoxes + newTotalBoxes;
+      console.log(newTotal);
       await axios.post(
         `https://localadminapi.sevabharath.com/api/updateinventory/${school}/${title}`,
         {
@@ -43,16 +47,31 @@ const UpdateInventory = () => {
           title,
           updatedDate,
           newTotalQuantity,
-          totalAddQuantity: newTotal,
-          available: 0,
+          totalAddQuantity: newTotal, // Use the new total here
+          available: newTotal,
           distributed: 0,
-          totalBoxes,
+          totalBoxes: newBoxes,
           reason: SB,
         }
       );
       console.log("Data Updated Successfully");
+
+      // Update the inventory in addinventory API
+      await axios.post("https://localadminapi.sevabharath.com/api/addinventory", {
+        school,
+        title,
+        createdDate: updatedDate, // Use the updated date here
+        totalAddQuantity: newTotal, // Use the new total here
+        available: newTotal,
+        distributed: 0,
+        totalBoxes: newBoxes,
+        reason: SB,
+      });
+      console.log("Data Updated in addinventory API");
+
       setUpdatedDate("");
       setTotalAddQuantity(newTotal); // Update totalAddQuantity with the new total
+      setTotalBoxes(newBoxes);
       window.location.reload(); // Reload the page
     } catch (error) {
       console.error("Error updating inventory data:", error);
@@ -137,7 +156,7 @@ const UpdateInventory = () => {
                 name="number"
                 class="form-control-1"
                 placeholder="Enter boxes"
-                onChange={(e) => setTotalBoxes(e.target.value)}
+                onChange={(e) => setNewTotalBoxes(e.target.value)}
               />
             </div>
           </div>
