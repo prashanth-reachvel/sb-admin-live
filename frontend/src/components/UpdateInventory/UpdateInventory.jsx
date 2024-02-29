@@ -10,6 +10,7 @@ const UpdateInventory = () => {
   const [totalAddQuantity, setTotalAddQuantity] = useState(0);
   const [newTotalQuantity, setNewTotalQuantity] = useState(0);
   const [totalBoxes, setTotalBoxes] = useState(0);
+  const [newDistributed, setNewDistributed] = useState(0);
   const [newTotalBoxes, setNewTotalBoxes] = useState(0);
   const school = schoolName;
   const SB = "Updated by SB";
@@ -21,10 +22,12 @@ const UpdateInventory = () => {
         const response = await axios.get(
           `https://localadminapi.sevabharath.com/api/inventory/${school}/${encodedTitle}`
         );
-        const { createdDate, totalAddQuantity, totalBoxes } = response.data;
+        const { createdDate, totalAddQuantity, totalBoxes, distributed } =
+          response.data;
         setUpdatedDate(createdDate);
         console.log(totalAddQuantity);
         setTotalAddQuantity(parseInt(totalAddQuantity));
+        setNewDistributed(parseInt(distributed));
         setTotalBoxes(parseInt(totalBoxes));
       } catch (error) {
         console.error("Error fetching inventory data:", error);
@@ -49,7 +52,7 @@ const UpdateInventory = () => {
           newTotalQuantity,
           totalAddQuantity: newTotal, // Use the new total here
           available: newTotal,
-          distributed: 0,
+          distributed: newDistributed,
           totalBoxes: newBoxes,
           reason: SB,
         }
@@ -63,7 +66,7 @@ const UpdateInventory = () => {
         createdDate: updatedDate, // Use the updated date here
         totalAddQuantity: newTotal, // Use the new total here
         available: newTotal,
-        distributed: 0,
+        distributed: newDistributed,
         totalBoxes: newBoxes,
         reason: SB,
       });
