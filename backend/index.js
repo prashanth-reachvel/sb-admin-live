@@ -183,15 +183,31 @@ app.get("/api/inventory/:schoolName", async (req, res) => {
 app.get("/api/inventory/:school/:title", async (req, res) => {
   try {
     const { school, title } = req.params;
-    const inventory = await Inventory.findOne({
-      school: school,
-      title: title,
-    }).sort({ createdDate: -1 }); // Sort by createdDate in descending order
-    // .limit(1); // Limit to 1 result
-    if (!inventory) {
+    const inventory = await Inventory.aggregate([
+      {
+        $match: {
+          school: school,
+          title: title,
+        },
+      },
+      {
+        $addFields: {
+          latestDate: { $max: ["$createdDate", "$updatedDate"] },
+        },
+      },
+      {
+        $sort: {
+          latestDate: -1,
+        },
+      },
+      {
+        $limit: 1,
+      },
+    ]);
+    if (inventory.length === 0) {
       return res.status(404).json({ error: "Inventory not found" });
     }
-    res.json(inventory);
+    res.json(inventory[0]);
   } catch (error) {
     console.error("Error fetching inventory:", error);
     res.status(500).json({ error: "Internal server error" });
