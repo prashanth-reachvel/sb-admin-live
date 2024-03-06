@@ -29,8 +29,8 @@ const UpdateInventory = () => {
           totalBoxes,
           available,
           distributed,
-        } = response.data;
-        console.log(response.data);
+        } = response.data[0];
+        console.log(response.data[0]);
         setTotalAddQuantity(parseInt(totalAddQuantity));
         setNewDistributed(parseInt(distributed));
         setAvailable(parseInt(available));
@@ -155,7 +155,7 @@ const UpdateInventory = () => {
                 id="quant-inventory-school total-quantity"
                 name="number"
                 class="form-control-1"
-                placeholder={`Available Qty: ${totalAddQuantity}`}
+                placeholder={`Available Qty: ${available}`}
                 onChange={(e) => setNewTotalQuantity(parseInt(e.target.value))}
                 required
               />
