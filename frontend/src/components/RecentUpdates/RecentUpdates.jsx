@@ -26,6 +26,8 @@ const RecentUpdates = () => {
     fetchData();
   }, [schoolName, title]);
 
+  console.log(updates);
+
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
   };
