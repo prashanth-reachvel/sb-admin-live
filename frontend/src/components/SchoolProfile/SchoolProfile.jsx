@@ -8,6 +8,7 @@ const SchoolProfile = () => {
   const [profileData, setProfileData] = useState([]);
   const [editUsername, setEditUsername] = useState(false);
   const [editPassword, setEditPassword] = useState(false);
+  const [editStudents, setEditStudents] = useState(false);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -29,6 +30,10 @@ const SchoolProfile = () => {
 
   const handlePasswordEdit = () => {
     setEditPassword(true);
+  };
+
+  const handleStudentsEdit = () => {
+    setEditStudents(true);
   };
 
   const handleUsernameChange = async (e) => {
@@ -69,6 +74,25 @@ const SchoolProfile = () => {
     }
   };
 
+  const handleStudentsChange = async (e) => {
+    if (e.key === "Enter") {
+      const newStudents = e.target.innerText;
+      try {
+        await axios.put(
+          `https://localadminapi.sevabharath.com/api/profile/updateStudents/${schoolName}`,
+          {
+            students: newStudents,
+          }
+        );
+        setProfileData((prevData) => ({ ...prevData, students: newStudents }));
+        setEditStudents(false);
+        alert("Students Count updated successfully");
+      } catch (error) {
+        console.error("Error updating students count:", error);
+      }
+    }
+  };
+
   return (
     <div className="inventory-box">
       <div className="inventory-top-row">
@@ -94,7 +118,20 @@ const SchoolProfile = () => {
           <label htmlFor="schoolId" className=" col-form-label">
             Students Count:
           </label>
-          <div className=" school-data">{profileData.students}</div>
+          <div
+            className="input-bg-group school-data"
+            id="editableField"
+            contentEditable={editStudents}
+            onKeyPress={handleStudentsChange}
+            onBlur={() => setEditStudents(false)}
+          >
+            {profileData.students}
+            {!editStudents && (
+              <button className="edit-btn" onClick={handleStudentsEdit}>
+                Edit
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="form-group row">
