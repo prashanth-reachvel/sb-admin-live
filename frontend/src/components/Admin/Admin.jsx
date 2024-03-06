@@ -13,7 +13,7 @@ const Admin = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/inventories"
+          "https://localadminapi.sevabharath.com/api/inventories"
         ); // Use relative URL to access backend endpoint
         console.log(response.data);
 
