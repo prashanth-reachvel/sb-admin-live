@@ -17,14 +17,16 @@ const Admin = () => {
         ); // Use relative URL to access backend endpoint
         console.log(response.data);
 
-        // Process the inventory data to calculate cumulative values
-        if (!Array.isArray(response.data)) {
-          console.error("Response data is not an array:", response.data);
-          setLoading(false);
-          return;
-        }
-
         const processedData = processInventoryData(response.data);
+
+        // // Process the sorted inventory data
+        // if (!Array.isArray(sortedData)) {
+        //   console.error("Sorted data is not an array:", sortedData);
+        //   setLoading(false);
+        //   return;
+        // }
+
+        // const processedData = processInventoryData(uniqueData);
 
         setInventoryData(processedData);
         setLoading(false); // Set loading to false after data is fetched
