@@ -12,7 +12,7 @@ const Requests = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://localadminapi.sevabharath.com/api/requests?limit=5"
+          "https://localadminapi.sevabharath.com/api/requests?limit=10"
         );
         console.log(response.data);
         setRequests(response.data);
@@ -100,7 +100,7 @@ const Requests = () => {
               <td>{request.schoolName}</td>
               <td>{request.inventory}</td>
               <td>{request.quantity}</td>
-              <td>{request.date}</td>
+              <td>{new Date(request.date).toLocaleDateString()}</td>
               <td>
                 {/* <a href="https://example.com" className="link">
                   view
@@ -111,8 +111,15 @@ const Requests = () => {
                     href={`http://localhost:3000/uploads/${request.selectedFile}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent the default link behavior
+                      window.open(
+                        `http://localhost:3000/${request.selectedFile}`
+                      );
+                    }}
                   >
                     View
+                    <img src={request.selectedFile} />
                   </a>
                 )}
               </td>
