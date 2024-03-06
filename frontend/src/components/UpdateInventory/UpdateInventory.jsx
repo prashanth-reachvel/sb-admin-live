@@ -110,7 +110,7 @@ const UpdateInventory = () => {
               type="text"
               id="schoolName"
               name="name"
-              class="form-control"
+              className="form-control"
               placeholder="Enter school name"
               value={schoolName}
               readOnly
@@ -124,7 +124,7 @@ const UpdateInventory = () => {
               type="text"
               id="title-inventory-school title"
               name="name"
-              class="form-control"
+              className="form-control"
               placeholder="Please enter title"
               value={title}
               readOnly
@@ -139,7 +139,7 @@ const UpdateInventory = () => {
                 type="date"
                 id="date-inventory-school date"
                 name="name"
-                class="form-control-1"
+                className="form-control-1"
                 placeholder="Please enter date"
                 onChange={(e) => setCreatedDate(e.target.value)}
                 required
@@ -154,7 +154,7 @@ const UpdateInventory = () => {
                 type="number"
                 id="quant-inventory-school total-quantity"
                 name="number"
-                class="form-control-1"
+                className="form-control-1"
                 placeholder={`Available Qty: ${available}`}
                 onChange={(e) => setNewTotalQuantity(parseInt(e.target.value))}
                 required
@@ -171,9 +171,9 @@ const UpdateInventory = () => {
                 type="number"
                 id="quant-inventory-school total-quantity"
                 name="number"
-                class="form-control-1"
-                placeholder={`${totalBoxes}`}
-                onChange={(e) => setNewTotalBoxes(e.target.value)}
+                className="form-control-1"
+                placeholder="Enter the boxes"
+                onChange={(e) => setNewTotalBoxes(parseInt(e.target.value))}
               />
             </div>
           </div>
