@@ -10,7 +10,7 @@ const inventorySchema = new mongoose.Schema({
     required: true,
   },
   createdDate: {
-    type: String,
+    type: Date,
   },
   totalAddQuantity: {
     type: Number,
@@ -22,8 +22,14 @@ const inventorySchema = new mongoose.Schema({
   distributed: {
     type: Number,
   },
+  totalBoxes: {
+    type: Number,
+  },
   reason: {
     type: String,
+  },
+  updatedDate: {
+    type: Date,
   },
 });
 
