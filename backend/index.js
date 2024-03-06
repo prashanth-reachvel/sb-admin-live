@@ -394,7 +394,7 @@ app.get("/api/inventories", async (req, res) => {
       const currentItemDate = new Date(item.updatedDate || item.createdDate);
       const currentLatestDate = acc[item.school]
         ? new Date(acc[item.school].updatedDate || acc[item.school].createdDate)
-        : 0; // Initialize with 0
+        : null; // Initialize with 0
 
       if (!acc[item.school] || currentItemDate > currentLatestDate) {
         acc[item.school] = item;
